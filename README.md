@@ -30,5 +30,5 @@ No frameworks, no build tools — just the fundamentals.
 
 1. Clone the repository:
 
-   at bash or any terminal bash
+   at bash or any terminal
    git clone https://github.com/habtufekadu/GitReminder.git
