@@ -19,7 +19,7 @@ function displayCommands(searchTerm) {
     // If any of them match, show the card
     if (matchesCommand || matchesDescription || matchesCategory) {
 
-      // Make the command safe for HTML
+      // Make the command safe for HTML display
       const safeCommand = cmd.command
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
@@ -30,6 +30,7 @@ function displayCommands(searchTerm) {
           <span class="command-category">${cmd.category}</span>
           <code class="command-text">${safeCommand}</code>
           <p class="command-description">${cmd.description}</p>
+          <button class="copy-button" data-command="${cmd.command}">Copy</button>
         </div>
       `;
 
@@ -46,4 +47,26 @@ displayCommands("");
 searchInput.addEventListener("input", function () {
   const term = searchInput.value.toLowerCase();
   displayCommands(term);
+});
+
+// 5. Handle copy button clicks (using event delegation)
+container.addEventListener("click", function (event) {
+
+  // Check if the clicked element is a copy button
+  if (event.target.classList.contains("copy-button")) {
+
+    const btn = event.target;
+    const command = btn.dataset.command;
+
+    // Copy the command to the clipboard
+    navigator.clipboard.writeText(command).then(function () {
+
+      // Show "Copied!" feedback for 1 second
+      const originalText = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(function () {
+        btn.textContent = originalText;
+      }, 500);
+    });
+  }
 });
